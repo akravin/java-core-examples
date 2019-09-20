@@ -14,7 +14,7 @@ cp -r resources $BUILD_DIR
 
 cd $CLASSES_DIR
 
-echo "Creating muthithreadconsumer.jar"
+echo "Creating phonedirectory.jar"
 
 echo "Main-Class: com.akravin.phonedirectory.Demo" > ../manifest.txt
 find com/akravin/phonedirectory -name *.class | xargs $JAVA_HOME/bin/jar -cfm ../phonedirectory.jar ../manifest.txt
