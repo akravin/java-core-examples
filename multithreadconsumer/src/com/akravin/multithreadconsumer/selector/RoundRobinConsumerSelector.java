@@ -2,29 +2,24 @@ package com.akravin.multithreadconsumer.selector;
 
 import com.akravin.multithreadconsumer.consumer.Consumer;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoundRobinConsumerSelector {
 
-    private final PriorityQueue<Consumer> queue = new PriorityQueue<>(
-            Comparator.comparingInt(Consumer::getUseCount));
+    private final ArrayList<Consumer> consumers = new ArrayList<>();
+    private final AtomicInteger index = new AtomicInteger();
 
     public void addConsumer(Consumer consumer) {
-        queue.add(consumer);
+        consumers.add(consumer);
     }
 
     public Consumer getConsumer() {
-        Consumer consumer = queue.poll();
-        if (consumer != null) {
-            consumer.increaseUseCount();
-            queue.add(consumer);
-        }
-        return consumer;
+        return consumers.get(index.getAndIncrement() % consumers.size());
     }
 
     public List<Consumer> getConsumers() {
-        return List.copyOf(queue);
+        return List.copyOf(consumers);
     }
 }

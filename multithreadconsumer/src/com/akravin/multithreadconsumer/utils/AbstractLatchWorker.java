@@ -27,6 +27,7 @@ public abstract class AbstractLatchWorker implements Runnable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
         doneSignal.countDown();
     }
 
